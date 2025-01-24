@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <style>
+        * {
+            font-family: arial, sans-serif;
+            margin: 10px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Welcome home</h1>
+    <form method="post" action="/api/URL/">
+        <label>Enter your URL</label>
+        <input type="text" name = "url" placeholder="https://www.google.ca">
+        <button type="submit">Generate</button>
+    </form>
+
+    <% if (locals.id) { %>
+        <p>URL Generated - <a href="http://localhost:8001/api/URL/<%= locals.id %>">click here</a></p>
+    <% } %>
+
+    <% if (locals.urls) { %>
+        <table>
+            <thead>
+                <th>S.no</th>
+                <th>ID</th>
+                <th>Redirect URL</th>
+                <th>Clicks</th>
+            </thead>
+            <tbody>
+                <% locals.urls.forEach((url, index) => { %>
+                <tr>
+                    <td><%= index+1 %></td>
+                    <td><%= url.shortId %></td>
+                    <td><%= url.redirectURL %></td>
+                    <td><%= url.visitHistory.length %></td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    <% } %>
+</body>
+</html>
