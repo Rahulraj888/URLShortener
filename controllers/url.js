@@ -3,14 +3,16 @@ const URL = require("../models/url")
 
 const handleGenerateNewShortURL = async(req, res) => {
     const body = req.body;
+    console.log("handleGenerateNewShortURL");
     if (!body.url) return res.status(404).json({"msg": "URL is required"});
     const shortID = shortid.generate();
     await URL.create ({
         shortId: shortID,
         redirectURL: body.url,
-        visitHistory: []
+        visitHistory: [],
+        createdBy: req.user._id
     });
-    res.render("home", {
+    return res.render("home", {
         "id": shortID
     });
     // res.status(200).json({"id": shortID});
