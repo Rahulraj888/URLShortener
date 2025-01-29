@@ -23,6 +23,7 @@ const handleUserSignIn = async(req, res) => {
     if (!user) return res.render("login", {
         error: "Invalid Username or Password"
     });
+    
     //generate sessionId and store it in the map
     const sessionId = uuidv4();
     setUser(sessionId, user);

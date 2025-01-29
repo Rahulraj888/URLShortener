@@ -4,7 +4,7 @@ function setUser(id, user) {
     return sessionIdToUserMap.set(id, user);
 }
 
-function getUser(id, user) {
+function getUser(id) {
     return sessionIdToUserMap.get(id);
 }
 

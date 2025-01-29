@@ -1,12 +1,14 @@
 const express = require("express");
-const dbConnection = require("./connect")
-const router = require("./routes/url");
-const {logReqRes} = require("./middlewares/index")
 const path = require("path");
+const cookieParser = require("cookie-parser")
+
+const dbConnection = require("./connect")
+const {logReqRes} = require("./middlewares/index")
+const { restrictToLoggedInUserOnly, checkAuth } = require("./middlewares/auth")
+
+const router = require("./routes/url");
 const staticRouter = require("./routes/staticroute")
 const userRouter = require("./routes/user")
-const cookieParser = require("cookie-parser")
-const { restrictToLoggedInUserOnly, checkAuth } = require("./middlewares/auth")
 
 const app = express();
 const PORT = 8001;
@@ -39,6 +41,7 @@ app.use(logReqRes("./logs/logs.txt"));
 app.use("/api/URL", restrictToLoggedInUserOnly, router);
 app.use("/", checkAuth, staticRouter);
 app.use("/users", userRouter);
+
 
 //listening to the server 
 app.listen(PORT, () => {
